@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[wild]lab — design · dev · automation · ai</title>
+<meta name="description" content="Il laboratorio di Marco “Wild”: coding, web app, home automation e intelligenza artificiale. Niente fronzoli.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="preloader">
+  <div id="boot">
+    <div class="line cursor-line"><span class="prompt">$</span><span class="cursor"></span></div>
+  </div>
+</div>
+
+<nav>
+  <a class="logo" href="#top"><img src="assets/wildlab-logo-negative.svg" alt="[wild]lab"></a>
+  <div class="menu">
+    <a href="#lavori">lavori</a>
+    <a href="#chi">chi</a>
+    <a href="#contatti">contatti</a>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="grid-bg"></div>
+  <div class="hero-meta mono">
+    <span>marco "wild"</span>
+    <span class="comment">// laboratorio di cose selvagge ma ordinate</span>
+  </div>
+  <div class="hero-content">
+    <img class="hero-logo reveal" src="assets/wildlab-logo-negative.svg" alt="[wild]lab">
+    <div class="hero-row">
+      <p class="hero-claim reveal">Scrivo codice, disegno interfacce e insegno alla casa a fare da sola.</p>
+      <div class="hero-tags">
+        <span>design</span><span class="dot">·</span><span>dev</span><span class="dot">·</span><span>automation</span><span class="dot">·</span><span>ai</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">scroll</div>
+</header>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span>coding is the craft</span><span class="sep">[*]</span><span>web app</span><span class="sep">[*]</span><span>home automation</span><span class="sep">[*]</span><span>intelligenza artificiale</span><span class="sep">[*]</span><span>design senza fronzoli</span><span class="sep">[*]</span>
+    <span>coding is the craft</span><span class="sep">[*]</span><span>web app</span><span class="sep">[*]</span><span>home automation</span><span class="sep">[*]</span><span>intelligenza artificiale</span><span class="sep">[*]</span><span>design senza fronzoli</span><span class="sep">[*]</span>
+  </div>
+</div>
+
+<section id="ambiti">
+  <div class="kicker reveal">[01] — ambiti</div>
+  <h2 class="reveal">Quattro modi diversi di risolvere lo stesso problema.</h2>
+  <div class="ambiti-grid reveal">
+    <div class="ambito">
+      <span class="tag">[cod]</span>
+      <h3>Coding</h3>
+      <p>L'attività principale. Frontend, Python, WordPress, automazioni. Codice pulito che tra un anno si legge ancora.</p>
+    </div>
+    <div class="ambito">
+      <span class="tag">[web]</span>
+      <h3>Web app</h3>
+      <p>Applicazioni web su misura: dal gestionale interno al prodotto pubblico. Interfacce essenziali, zero pesi morti.</p>
+    </div>
+    <div class="ambito">
+      <span class="tag">[hau]</span>
+      <h3>Home automation</h3>
+      <p>Home Assistant, YAML, integrazioni. La casa che si accende, si spegne e si regola da sola — senza cloud inutili.</p>
+    </div>
+    <div class="ambito">
+      <span class="tag">[ai]</span>
+      <h3>Intelligenza artificiale</h3>
+      <p>LLM e automazioni AI dentro flussi di lavoro reali. Strumenti che fanno risparmiare tempo, non demo da conferenza.</p>
+    </div>
+  </div>
+</section>
+
+<section id="lavori">
+  <div class="kicker reveal">[02] — lavori selezionati</div>
+  <h2 class="reveal">Qualche progetto, zero fronzoli.</h2>
+  <div>
+
+    <article class="progetto reveal">
+      <div class="progetto-info">
+        <div class="progetto-meta"><span class="num">01</span><span>home automation</span><span>2026</span></div>
+        <h3>home assistant</h3>
+        <p>Configurazione Home Assistant completa: 40+ automazioni, dashboard custom e zero dipendenze cloud.</p>
+        <div class="progetto-tags"><span>home assistant</span><span>yaml</span><span>esphome</span></div>
+      </div>
+      <div class="mockup-ipad"><img src="assets/home-assistant.png" alt="Dashboard Home Assistant su iPad"></div>
+    </article>
+
+    <article class="progetto reveal">
+      <div class="progetto-info">
+        <div class="progetto-meta"><span class="num">02</span><span>web app</span><span>2026</span></div>
+        <h3>blacksheep POS</h3>
+        <p>Punto cassa web per un locale di specialità abruzzesi: categorie, comande e stampe di reparto in un'unica interfaccia touch.</p>
+        <div class="progetto-tags"><span>web app</span><span>pos</span><span>touch ui</span></div>
+      </div>
+      <div class="mockup-ipad"><img src="assets/blacksheep-pos.png" alt="Blacksheep POS su iPad"></div>
+    </article>
+
+    <article class="progetto reveal">
+      <div class="progetto-info">
+        <div class="progetto-meta"><span class="num">03</span><span>ai</span><span>2025</span></div>
+        <h3>lexa</h3>
+        <p>Assistente legale basato su LLM e Google Gemini Notebook: chatbot che interroga archivi nazionali e risponde citando le fonti.</p>
+        <div class="progetto-tags"><span>llm</span><span>notebooklm</span><span>python</span></div>
+      </div>
+      <div class="mockup-browser"><div class="shot"><img src="assets/lexa.png" alt="Editor con la pipeline RAG di lexa"></div></div>
+    </article>
+
+    <article class="progetto reveal">
+      <div class="progetto-info">
+        <div class="progetto-meta"><span class="num">04</span><span>coding</span><span>2025</span></div>
+        <h3>whatsapp gateway</h3>
+        <p>Integrazione WhatsApp ↔ Chatwoot — Bridge Python self-hosted tra un gateway WhatsApp (OpenWA, patchato a livello sorgente TypeScript) e Chatwoot, per centralizzare le chat clienti di uno studio legale.</p>
+        <div class="progetto-tags"><span>python</span><span>rest api</span><span>docker</span></div>
+      </div>
+      <div class="mockup-ipad"><img src="assets/whatsapp-gateway.png" alt="Chatwoot con canale WhatsApp su iPad"></div>
+    </article>
+
+    <article class="progetto reveal">
+      <div class="progetto-info">
+        <div class="progetto-meta"><span class="num">05</span><span>design · dev</span><span>2026</span></div>
+        <h3>avvocatofirmani.it</h3>
+        <p>Design e sviluppo del sito per uno studio legale di Pescara specializzato in risarcimento danni: statico, veloce, ottimizzato per la conversione.</p>
+        <div class="progetto-tags"><span>html</span><span>css</span><span>javascript</span></div>
+      </div>
+      <div class="mockup-ipad"><img src="assets/avvocatofirmani.png" alt="avvocatofirmani.it su iPad"></div>
+    </article>
+
+  </div>
+</section>
+
+<section id="chi">
+  <div class="cols">
+    <div class="chi-col reveal">
+      <div class="kicker">[03] — chi</div>
+      <img class="ritratto" src="assets/marco-ritratto.jpg" alt="Ritratto di Marco">
+      <div class="chi-caption">marco "wild" · design &amp; dev</div>
+    </div>
+    <div class="chi-testo reveal">
+      <h2>Selvaggio nell'approccio, ordinato nel risultato.</h2>
+      <p>Sono Marco, per gli amici "Wild". wildlab è il laboratorio con cui firmo tutto quello che progetto e sviluppo: interfacce, siti, automazioni domestiche e strumenti che usano l'AI per fare cose utili — non per fare scena.</p>
+      <p>Il metodo è sempre lo stesso: capire il problema, togliere il superfluo, scrivere codice che tra un anno si legga ancora. Niente fronzoli, niente concessioni al trendy. Mille no per ogni sì.</p>
+      <div class="stack">
+        <div class="stack-row"><span class="k">linguaggi</span><span class="v">Python · JavaScript · PHP · YAML · SQL</span></div>
+        <div class="stack-row"><span class="k">web</span><span class="v">WordPress · Flask · frontend vanilla · REST API</span></div>
+        <div class="stack-row"><span class="k">automation</span><span class="v">Home Assistant · ESPHome · MQTT · Node-RED</span></div>
+        <div class="stack-row"><span class="k">ai</span><span class="v">LLM API · RAG · function calling · automazioni</span></div>
+        <div class="stack-row"><span class="k">design</span><span class="v">identità visive · UI · editoria · Figma</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contatti">
+  <div class="grid-bg"></div>
+  <div class="inner">
+    <div class="kicker reveal">[04] — contatti</div>
+    <h2 class="reveal">Hai un problema interessante? Parliamone.</h2>
+    <div class="contatti-links reveal">
+      <a href="mailto:marcpalm76@gmail.com"><span>marcpalm76@gmail.com</span><span class="arrow">→</span></a>
+      <a href="https://github.com/LordHenry76/" target="_blank" rel="noopener"><span>github.com/LordHenry76</span><span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <img src="assets/wildlab-logo-negative.svg" alt="[wild]lab">
+    <span>design · dev · automation · ai</span>
+  </div>
+  <div class="footer-meta">
+    <a href="mailto:marcpalm76@gmail.com">marcpalm76@gmail.com</a>
+    <span>© 2026</span>
+  </div>
+</footer>
+
+<template id="__bundler_thumbnail" data-bg-color="#0A0A0A"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#0A0A0A"/><text x="50" y="58" font-family="monospace" font-size="22" fill="#D94E15" text-anchor="middle">[wl]</text></svg></template>
+<script src="js/main.js"></script>
+</body>
+</html>
