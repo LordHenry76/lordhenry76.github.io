@@ -251,6 +251,9 @@ h2 {
   padding: 14px 28px; cursor: pointer;
 }
 .contact-form button:hover { background: var(--fg); color: var(--bg); }
+.contact-form button:disabled { opacity: .5; cursor: wait; }
+.form-status { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--sub); min-height: 1.2em; }
+.form-status .ok { color: var(--accent); }
 
 /* Footer */
 footer {
