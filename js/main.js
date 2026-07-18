@@ -1,7 +1,7 @@
 // [wild]lab — preloader boot sequence + reveal on scroll
 (function () {
   var lines = [
-    { p: '$', t: 'boot wildlab.it', ok: '' },
+    { p: '$', t: 'boot [wild]lab', ok: '' },
     { p: '>', t: 'loading kernel [wild]', ok: 'ok' },
     { p: '>', t: 'mounting /lab', ok: 'ok' },
     { p: '>', t: 'design.svc dev.svc automation.svc ai.svc', ok: 'ok' },
@@ -62,16 +62,38 @@
       }).then(function (r) {
         if (r.ok) {
           form.reset();
-          status.innerHTML = '&gt; messaggio inviato <span class="ok">ok</span>';
+          showModal(true);
         } else {
-          status.innerHTML = '&gt; errore di invio — riprova o scrivi a marcpalm76@gmail.com';
+          showModal(false);
         }
       }).catch(function () {
-        status.innerHTML = '&gt; errore di rete — riprova o scrivi a marcpalm76@gmail.com';
+        showModal(false);
       }).finally(function () {
         btn.disabled = false;
         btn.textContent = 'invia →';
       });
     });
+
+    // Modale di conferma
+    var modal = document.createElement('div');
+    modal.className = 'form-modal';
+    modal.innerHTML =
+      '<div class="form-modal-box mono">' +
+      '<div class="form-modal-msg"></div>' +
+      '<button type="button" class="form-modal-close">chiudi [x]</button>' +
+      '</div>';
+    document.body.appendChild(modal);
+    modal.querySelector('.form-modal-close').addEventListener('click', function () {
+      modal.classList.remove('open');
+    });
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) modal.classList.remove('open');
+    });
+    function showModal(ok) {
+      modal.querySelector('.form-modal-msg').innerHTML = ok
+        ? '<span class="prompt">$</span> messaggio inviato <span class="ok">ok</span><br><span class="sub">Ti rispondo appena posso. Grazie!</span>'
+        : '<span class="prompt">$</span> errore di invio<br><span class="sub">Riprova tra poco o scrivimi direttamente a marcpalm76@gmail.com</span>';
+      modal.classList.add('open');
+    }
   }
 })();
