@@ -255,6 +255,32 @@ h2 {
 .form-status { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--sub); min-height: 1.2em; }
 .form-status .ok { color: var(--accent); }
 
+/* Modale conferma form */
+.form-modal {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(10, 10, 10, 0.75);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.form-modal.open { opacity: 1; pointer-events: auto; }
+.form-modal-box {
+  background: var(--bg); border: 1px solid var(--border);
+  padding: 36px 40px; max-width: 420px; width: calc(100% - 48px);
+  display: flex; flex-direction: column; gap: 24px;
+  transform: translateY(12px); transition: transform .3s;
+}
+.form-modal.open .form-modal-box { transform: translateY(0); }
+.form-modal-msg { font-size: 15px; line-height: 1.7; color: var(--fg); }
+.form-modal-msg .prompt { color: var(--graphite); }
+.form-modal-msg .ok { color: var(--accent); }
+.form-modal-msg .sub { color: var(--sub); font-size: 13px; }
+.form-modal-close {
+  align-self: flex-start; background: transparent; border: 1px solid var(--border);
+  color: var(--fg); font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  padding: 10px 18px; cursor: pointer;
+}
+.form-modal-close:hover { color: var(--accent); border-color: var(--accent); }
+
 /* Footer */
 footer {
   padding: var(--pad); border-top: 1px solid var(--border);
