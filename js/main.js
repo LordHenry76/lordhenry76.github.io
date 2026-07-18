@@ -42,4 +42,36 @@
     }, { threshold: 0.12 });
     els.forEach(function (el) { io.observe(el); });
   }
+
+  // Form contatti — invio AJAX senza lasciare la pagina
+  var form = document.querySelector('.contact-form');
+  if (form) {
+    var btn = form.querySelector('button[type="submit"]');
+    var status = document.createElement('div');
+    status.className = 'form-status mono';
+    form.appendChild(status);
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      btn.disabled = true;
+      btn.textContent = 'invio…';
+      status.textContent = '';
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function (r) {
+        if (r.ok) {
+          form.reset();
+          status.innerHTML = '&gt; messaggio inviato <span class="ok">ok</span>';
+        } else {
+          status.innerHTML = '&gt; errore di invio — riprova o scrivi a marcpalm76@gmail.com';
+        }
+      }).catch(function () {
+        status.innerHTML = '&gt; errore di rete — riprova o scrivi a marcpalm76@gmail.com';
+      }).finally(function () {
+        btn.disabled = false;
+        btn.textContent = 'invia →';
+      });
+    });
+  }
 })();
