@@ -61,7 +61,10 @@ nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 50;
   display: flex; justify-content: space-between; align-items: center;
   padding: clamp(14px, 3vw, 20px) var(--pad);
-  mix-blend-mode: difference; color: #FAFAF7;
+  color: #FAFAF7;
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 nav .logo img { height: 18px; display: block; }
 nav .menu { display: flex; gap: 28px; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
@@ -237,6 +240,12 @@ footer {
 .footer-brand { display: flex; flex-direction: column; gap: 10px; }
 .footer-brand img { height: 16px; align-self: flex-start; }
 .footer-brand span, .footer-meta { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--sub); }
-.footer-meta { display: flex; gap: 20px; }
+.footer-meta { display: flex; gap: 20px; align-items: center; }
+.footer-meta .top-link {
+  color: var(--fg); border: 1px solid var(--border); padding: 8px 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.footer-meta .top-link .arrow { color: var(--accent); }
+.footer-meta .top-link:hover { color: var(--accent); border-color: var(--accent); }
 .footer-meta a { color: var(--sub); text-decoration: none; }
 .footer-meta a:hover { color: var(--accent); }
