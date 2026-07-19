@@ -181,3 +181,106 @@
   link.addEventListener('click', open);
   closeBtn.addEventListener('click', close);
 })();
+
+// Snake — wildlab arcade
+(function () {
+  var overlay = document.getElementById('snake-overlay');
+  var canvas = document.getElementById('snake-canvas');
+  var link = document.getElementById('snake-link');
+  var closeBtn = document.getElementById('snake-close');
+  if (!overlay || !canvas || !link) return;
+  var ctx = canvas.getContext('2d');
+  var W = 720, H = 480, C = 24, COLS = 30, ROWS = 20;
+  var g, timer, touch = null;
+
+  function placeFood() {
+    var f;
+    do { f = { x: Math.floor(Math.random() * COLS), y: Math.floor(Math.random() * ROWS) }; }
+    while (g.snake.some(function (s) { return s.x === f.x && s.y === f.y; }));
+    g.food = f;
+  }
+  function start() {
+    g.snake = [{x:14,y:10},{x:13,y:10},{x:12,y:10}];
+    g.dir = {x:1,y:0}; g.next = {x:1,y:0};
+    g.score = 0; g.over = false; g.msg = ''; g.running = true;
+    placeFood(); schedule();
+  }
+  function schedule() {
+    clearInterval(timer);
+    var speed = Math.max(60, 130 - Math.floor(g.score / 5) * 10);
+    timer = setInterval(step, speed);
+  }
+  function step() {
+    g.dir = g.next;
+    var head = { x: g.snake[0].x + g.dir.x, y: g.snake[0].y + g.dir.y };
+    if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS || g.snake.some(function (s) { return s.x === head.x && s.y === head.y; })) {
+      g.running = false; g.over = true;
+      g.msg = 'game over — ' + g.score + ' punti — spazio per rigiocare';
+      if (g.score > g.best) { g.best = g.score; try { localStorage.setItem('wildlab-snake-best', String(g.best)); } catch (e) {} }
+      clearInterval(timer); draw(); return;
+    }
+    g.snake.unshift(head);
+    if (g.food && head.x === g.food.x && head.y === g.food.y) {
+      g.score++; placeFood();
+      if (g.score % 5 === 0) schedule();
+    } else g.snake.pop();
+    draw();
+  }
+  function draw() {
+    ctx.fillStyle = '#0A0A0A'; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(250,250,247,0.05)'; ctx.lineWidth = 1;
+    var x, y;
+    for (x = C; x < W; x += C) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (y = C; y < H; y += C) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+    if (g.food) { ctx.fillStyle = '#D94E15'; ctx.fillRect(g.food.x * C + 4, g.food.y * C + 4, C - 8, C - 8); }
+    g.snake.forEach(function (s, i) {
+      ctx.fillStyle = i === 0 ? '#FAFAF7' : 'rgba(250,250,247,0.75)';
+      ctx.fillRect(s.x * C + 2, s.y * C + 2, C - 4, C - 4);
+    });
+    ctx.font = '13px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
+    ctx.fillStyle = 'rgba(250,250,247,0.5)';
+    ctx.fillText('score ' + g.score + '   best ' + g.best, 12, 22);
+    if (g.msg) { ctx.font = '13px "JetBrains Mono", monospace'; ctx.textAlign = 'center'; ctx.fillStyle = '#D94E15'; ctx.fillText(g.msg, W / 2, H / 2 + 60); }
+  }
+  function turn(d) {
+    if (d.x === -g.dir.x && d.y === -g.dir.y) return;
+    g.next = d;
+  }
+  function onKeyDown(e) {
+    if (e.key === 'Escape') { close(); return; }
+    var dirs = { ArrowUp: {x:0,y:-1}, ArrowDown: {x:0,y:1}, ArrowLeft: {x:-1,y:0}, ArrowRight: {x:1,y:0} };
+    if (dirs[e.key] || e.key === ' ') e.preventDefault();
+    if (e.key === ' ' && !g.running) { start(); return; }
+    if (dirs[e.key] && g.running) turn(dirs[e.key]);
+  }
+  function onDown(e) { touch = { x: e.clientX, y: e.clientY }; if (!g.running) start(); }
+  function onMove(e) {
+    if (!touch || !g.running) return;
+    var dx = e.clientX - touch.x, dy = e.clientY - touch.y;
+    if (Math.abs(dx) < 24 && Math.abs(dy) < 24) return;
+    turn(Math.abs(dx) > Math.abs(dy) ? { x: Math.sign(dx), y: 0 } : { x: 0, y: Math.sign(dy) });
+    touch = { x: e.clientX, y: e.clientY };
+  }
+  function onUp() { touch = null; }
+
+  function open() {
+    g = { snake: [{x:14,y:10},{x:13,y:10},{x:12,y:10}], dir: {x:1,y:0}, next: {x:1,y:0}, food: null, score: 0, best: 0, running: false, over: false, msg: 'premi spazio per iniziare' };
+    try { g.best = parseInt(localStorage.getItem('wildlab-snake-best') || '0', 10) || 0; } catch (e) {}
+    overlay.hidden = false;
+    window.addEventListener('keydown', onKeyDown);
+    canvas.addEventListener('pointerdown', onDown);
+    canvas.addEventListener('pointermove', onMove);
+    canvas.addEventListener('pointerup', onUp);
+    draw();
+  }
+  function close() {
+    clearInterval(timer);
+    overlay.hidden = true;
+    window.removeEventListener('keydown', onKeyDown);
+    canvas.removeEventListener('pointerdown', onDown);
+    canvas.removeEventListener('pointermove', onMove);
+    canvas.removeEventListener('pointerup', onUp);
+  }
+  link.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+})();
