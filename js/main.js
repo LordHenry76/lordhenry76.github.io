@@ -97,3 +97,87 @@
     }
   }
 })();
+
+// Pong — wildlab arcade
+(function () {
+  var overlay = document.getElementById('pong-overlay');
+  var canvas = document.getElementById('pong-canvas');
+  var link = document.getElementById('pong-link');
+  var closeBtn = document.getElementById('pong-close');
+  if (!overlay || !canvas || !link) return;
+  var ctx = canvas.getContext('2d');
+  var W = 720, H = 480, PH = 72, PW = 10, R = 6;
+  var g, raf, keys = {};
+
+  function serve() {
+    if (g.over) { g.ps = 0; g.as = 0; g.over = false; }
+    g.bx = W / 2; g.by = H / 2;
+    g.vx = 5 * (Math.random() < 0.5 ? 1 : -1);
+    g.vy = Math.random() * 5 - 2.5;
+    g.running = true; g.msg = '';
+  }
+  function clampY(y) { return Math.max(PH / 2, Math.min(H - PH / 2, y)); }
+
+  function loop() {
+    if (keys['ArrowUp']) g.py -= 7;
+    if (keys['ArrowDown']) g.py += 7;
+    g.py = clampY(g.py);
+    if (g.running) {
+      g.bx += g.vx; g.by += g.vy;
+      if (g.by < R || g.by > H - R) { g.vy *= -1; g.by = Math.max(R, Math.min(H - R, g.by)); }
+      if (g.vx < 0 && g.bx - R < 24 + PW && g.bx - R > 14 && Math.abs(g.by - g.py) < PH / 2 + R) { g.vx = Math.min(11, -g.vx * 1.06); g.vy += (g.by - g.py) * 0.12; }
+      if (g.vx > 0 && g.bx + R > W - 24 - PW && g.bx + R < W - 14 && Math.abs(g.by - g.ay) < PH / 2 + R) { g.vx = Math.max(-11, -g.vx * 1.06); g.vy += (g.by - g.ay) * 0.12; }
+      g.ay = clampY(g.ay + Math.max(-4.4, Math.min(4.4, (g.by - g.ay) * 0.085)));
+      if (g.bx < -R) { g.as++; g.running = false; g.over = g.as >= 5; g.msg = g.over ? 'game over — spazio per rigiocare' : 'punto al lab — spazio per servire'; }
+      if (g.bx > W + R) { g.ps++; g.running = false; g.over = g.ps >= 5; g.msg = g.over ? 'hai vinto! — spazio per rigiocare' : 'punto per te — spazio per servire'; }
+    }
+    ctx.fillStyle = '#0A0A0A'; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(250,250,247,0.25)'; ctx.setLineDash([8, 10]); ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(W / 2, 0); ctx.lineTo(W / 2, H); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#FAFAF7';
+    ctx.fillRect(24, g.py - PH / 2, PW, PH);
+    ctx.fillRect(W - 24 - PW, g.ay - PH / 2, PW, PH);
+    ctx.font = '700 46px "JetBrains Mono", monospace'; ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(250,250,247,0.5)';
+    ctx.fillText(g.ps, W / 2 - 60, 62); ctx.fillText(g.as, W / 2 + 60, 62);
+    if (g.msg) { ctx.font = '13px "JetBrains Mono", monospace'; ctx.fillStyle = '#D94E15'; ctx.fillText(g.msg, W / 2, H - 40); }
+    if (g.running || g.msg === '') { ctx.fillStyle = '#D94E15'; ctx.fillRect(g.bx - R, g.by - R, R * 2, R * 2); }
+    raf = requestAnimationFrame(loop);
+  }
+
+  function onKeyDown(e) {
+    if (e.key === 'Escape') { close(); return; }
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === ' ') e.preventDefault();
+    if (e.key === ' ' && !g.running) serve();
+    keys[e.key] = true;
+  }
+  function onKeyUp(e) { keys[e.key] = false; }
+  function onPointer(e) {
+    var r = canvas.getBoundingClientRect();
+    g.py = clampY((e.clientY - r.top) / r.height * H);
+  }
+  function onTap() { if (!g.running) serve(); }
+
+  function open() {
+    g = { py: H / 2, ay: H / 2, bx: W / 2, by: H / 2, vx: 0, vy: 0, ps: 0, as: 0, running: false, over: false, msg: 'premi spazio per servire' };
+    keys = {};
+    overlay.hidden = false;
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keyup', onKeyUp);
+    canvas.addEventListener('pointermove', onPointer);
+    canvas.addEventListener('pointerdown', onPointer);
+    canvas.addEventListener('click', onTap);
+    loop();
+  }
+  function close() {
+    cancelAnimationFrame(raf);
+    overlay.hidden = true;
+    window.removeEventListener('keydown', onKeyDown);
+    window.removeEventListener('keyup', onKeyUp);
+    canvas.removeEventListener('pointermove', onPointer);
+    canvas.removeEventListener('pointerdown', onPointer);
+    canvas.removeEventListener('click', onTap);
+  }
+  link.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+})();
