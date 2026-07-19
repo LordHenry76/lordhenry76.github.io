@@ -301,8 +301,11 @@ footer {
 .footer-meta a:hover { color: var(--accent); }
 
 /* Pong */
-.pong-link {
+.arcade-links {
   position: absolute; top: 96px; right: var(--pad);
+  display: flex; flex-direction: column; gap: 6px; align-items: flex-end;
+}
+.pong-link {
   background: none; border: none; padding: 0; cursor: pointer;
   font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--sub);
 }
@@ -321,7 +324,7 @@ footer {
   width: min(720px, 92vw); font-size: 12px; color: var(--sub);
 }
 .pong-bar .prompt { color: var(--accent); }
-#pong-canvas {
+#pong-canvas, #snake-canvas {
   width: min(720px, 92vw); aspect-ratio: 3 / 2;
   border: 1px solid var(--border); background: #0A0A0A; touch-action: none;
 }
