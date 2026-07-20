@@ -336,8 +336,6 @@ footer {
 
 @media (max-width: 700px) {
   .hero-meta { top: 84px; }
-  .hero-meta .comment { max-width: 60vw; }
-  .arcade-links {
-    top: 170px; right: var(--pad);
-  }
+  .hero-meta .comment { max-width: 52vw; }
+  .arcade-links { top: 84px; right: var(--pad); }
 }
