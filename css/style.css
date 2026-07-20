@@ -333,3 +333,11 @@ footer {
   font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 8px 14px; cursor: pointer;
 }
 .pong-close:hover { color: var(--accent); border-color: var(--accent); }
+
+@media (max-width: 700px) {
+  .hero-meta { top: 84px; }
+  .hero-meta .comment { max-width: 60vw; }
+  .arcade-links {
+    top: 170px; right: var(--pad);
+  }
+}
