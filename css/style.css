@@ -339,3 +339,9 @@ footer {
   .hero-meta .comment { max-width: 52vw; }
   .arcade-links { top: 84px; right: var(--pad); }
 }
+
+/* iPhone landscape: hero logo too tall */
+@media (max-height: 500px) {
+  .hero-logo { width: min(520px, 58vw); }
+  .hero-content { gap: 20px; }
+}
