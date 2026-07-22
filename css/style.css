@@ -345,3 +345,52 @@ footer {
   .hero-logo { width: min(520px, 58vw); }
   .hero-content { gap: 20px; }
 }
+
+
+/* Cookie banner */
+.cookie-banner {
+  position: fixed; left: 24px; right: 24px; bottom: 24px; z-index: 300;
+  background: var(--bg); border: 1px solid var(--border);
+  padding: 18px 22px; display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap; font-size: 13px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+.cookie-banner[hidden] { display: none; }
+.cookie-msg { color: var(--fg); line-height: 1.6; }
+.cookie-msg .prompt { color: var(--graphite); }
+.cookie-msg .sub { color: var(--sub); }
+.cookie-msg a { color: var(--accent); text-decoration: none; }
+.cookie-msg a:hover { text-decoration: underline; }
+.cookie-actions { display: flex; gap: 12px; }
+.cookie-actions button {
+  background: transparent; border: 1px solid var(--border); color: var(--fg);
+  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  padding: 10px 16px; cursor: pointer;
+}
+.cookie-actions button:hover { color: var(--accent); border-color: var(--accent); }
+#cookie-accept { border-color: var(--accent); color: var(--accent); }
+#cookie-accept:hover { background: var(--accent); color: #FAFAF7; }
+.cookie-prefs {
+  background: none; border: none; padding: 0; cursor: pointer;
+  font-family: 'JetBrains Mono', monospace; font-size: inherit; color: inherit;
+}
+.cookie-prefs:hover { color: var(--accent); }
+@media (max-width: 640px) {
+  .cookie-banner { left: 12px; right: 12px; bottom: 12px; }
+}
+
+/* Consenso privacy nel form */
+.form-consent {
+  flex-direction: row !important; align-items: flex-start; gap: 10px !important;
+  font-size: 12px; color: var(--sub); line-height: 1.6; cursor: pointer;
+}
+.form-consent input[type="checkbox"] {
+  appearance: none; -webkit-appearance: none; flex: none;
+  width: 16px; height: 16px; margin-top: 2px;
+  background: var(--bg); border: 1px solid var(--border); cursor: pointer;
+}
+.form-consent input[type="checkbox"]:checked {
+  background: var(--accent); border-color: var(--accent);
+}
+.form-consent a { color: var(--accent); text-decoration: none; }
+.form-consent a:hover { text-decoration: underline; }
