@@ -284,3 +284,30 @@
   link.addEventListener('click', open);
   closeBtn.addEventListener('click', close);
 })();
+
+
+// Cookie consent — GA parte solo dopo "accetta"
+(function () {
+  var KEY = 'wl-cookie-consent';
+  var banner = document.getElementById('cookie-banner');
+  if (!banner) return;
+  var stored = null;
+  try { stored = localStorage.getItem(KEY); } catch (e) {}
+  function apply(choice) {
+    try { localStorage.setItem(KEY, choice); } catch (e) {}
+    banner.hidden = true;
+    if (choice === 'yes' && window.wlLoadGA) window.wlLoadGA();
+  }
+  if (stored === 'yes') {
+    if (window.wlLoadGA) window.wlLoadGA();
+  } else if (stored !== 'no') {
+    banner.hidden = false;
+  }
+  document.getElementById('cookie-accept').addEventListener('click', function () { apply('yes'); });
+  document.getElementById('cookie-reject').addEventListener('click', function () { apply('no'); });
+  var prefs = document.getElementById('cookie-prefs');
+  if (prefs) prefs.addEventListener('click', function () {
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    banner.hidden = false;
+  });
+})();
