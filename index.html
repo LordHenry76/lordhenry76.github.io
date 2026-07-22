@@ -4,13 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="google-site-verification" content="6n95qmiWdIdMx7_6i-3iX0XWfZ9rsQnwUMPsYDpBGYw" />
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8119K279L1"></script>
+<!-- Google Analytics — caricato solo dopo consenso (vedi js/main.js) -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-8119K279L1');
+  window.wlLoadGA = function () {
+    if (window.__gaLoaded) return;
+    window.__gaLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-8119K279L1';
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', 'G-8119K279L1');
+  };
 </script>
 <title>[wild]lab — design · dev · automation · ai</title>
 <meta name="description" content="Il laboratorio di Marco “Wild”: coding, web app, home automation e intelligenza artificiale. Niente fronzoli.">
@@ -186,6 +193,10 @@
       <label>messaggio
         <textarea name="messaggio" required rows="4" placeholder="raccontami il problema…"></textarea>
       </label>
+      <label class="form-consent mono">
+        <input type="checkbox" name="privacy" required>
+        <span>Ho letto l'<a href="privacy.html">informativa privacy</a> e acconsento al trattamento dei dati per ricevere una risposta.</span>
+      </label>
       <button type="submit">invia →</button>
     </form>
     <div class="contatti-links reveal">
@@ -202,10 +213,20 @@
   </div>
   <div class="footer-meta">
     <a href="mailto:marcpalm76@gmail.com">marcpalm76@gmail.com</a>
+    <a href="privacy.html">privacy</a>
+    <button type="button" class="cookie-prefs" id="cookie-prefs">cookie</button>
     <span>© 2026</span>
     <a class="top-link" href="#top">top <span class="arrow">↑</span></a>
   </div>
 </footer>
+
+<div class="cookie-banner mono" id="cookie-banner" hidden>
+  <div class="cookie-msg"><span class="prompt">$</span> cookies --statistici <span class="sub">// Google Analytics, solo per capire quante persone passano di qui. <a href="privacy.html">informativa</a></span></div>
+  <div class="cookie-actions">
+    <button type="button" id="cookie-accept">[accetta]</button>
+    <button type="button" id="cookie-reject">[rifiuta]</button>
+  </div>
+</div>
 
 <div class="pong-overlay" id="pong-overlay" hidden>
   <div class="pong-bar mono"><span><span class="prompt">$</span> ./pong — primo a 5 vince</span><span>wildlab arcade v0.1</span></div>
