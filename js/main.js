@@ -301,7 +301,14 @@
   if (stored === 'yes') {
     if (window.wlLoadGA) window.wlLoadGA();
   } else if (stored !== 'no') {
-    banner.hidden = false;
+    // Mostra il banner solo dopo che il preloader è sparito
+    var pre = document.getElementById('preloader');
+    var wait = setInterval(function () {
+      if (!pre || pre.classList.contains('gone')) {
+        clearInterval(wait);
+        setTimeout(function () { banner.hidden = false; }, 600);
+      }
+    }, 200);
   }
   document.getElementById('cookie-accept').addEventListener('click', function () { apply('yes'); });
   document.getElementById('cookie-reject').addEventListener('click', function () { apply('no'); });
