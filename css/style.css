@@ -335,6 +335,7 @@ footer {
 .pong-close:hover { color: var(--accent); border-color: var(--accent); }
 
 @media (max-width: 700px) {
+  .progetto-info { position: static; }
   .hero-meta { top: 84px; }
   .hero-meta .comment { max-width: 52vw; }
   .arcade-links { top: 84px; right: var(--pad); }
