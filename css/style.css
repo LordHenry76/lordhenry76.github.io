@@ -290,7 +290,8 @@ footer {
 .footer-brand { display: flex; flex-direction: column; gap: 10px; }
 .footer-brand img { height: 16px; align-self: flex-start; }
 .footer-brand span, .footer-meta { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--sub); }
-.footer-meta { display: flex; gap: 20px; align-items: center; }
+.footer-meta { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+.footer-meta span { white-space: nowrap; }
 .footer-meta .top-link {
   color: var(--fg); border: 1px solid var(--border); padding: 8px 14px;
   display: flex; align-items: center; gap: 8px;
@@ -337,6 +338,9 @@ footer {
 
 @media (max-width: 700px) {
   .progetto-info { position: static; }
+  .footer-brand span, .footer-meta { font-size: 11px; }
+  .footer-meta { gap: 12px; }
+  .footer-meta .top-link { padding: 6px 10px; }
   .hero-meta { top: 84px; }
   .hero-meta .comment { max-width: 52vw; }
   .arcade-links { top: 84px; right: var(--pad); }
