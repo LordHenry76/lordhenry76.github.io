@@ -350,8 +350,10 @@ footer {
 
 /* iPhone landscape: hero logo too tall */
 @media (max-height: 500px) {
-  .hero-logo { width: min(520px, 58vw); }
+  header { padding-top: 150px; }
+  .hero-logo { width: min(420px, 46vw); }
   .hero-content { gap: 20px; }
+  .hero-claim { font-size: 17px; }
 }
 
 
