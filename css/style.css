@@ -317,15 +317,16 @@ footer {
   backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
   color: var(--fg);
+  padding: 12px; box-sizing: border-box; overflow: auto;
 }
 .pong-overlay[hidden] { display: none; }
 .pong-bar {
   display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
-  width: min(720px, 92vw); font-size: 12px; color: var(--sub);
+  width: min(720px, 92vw, calc((100dvh - 130px) * 1.5)); font-size: 12px; color: var(--sub);
 }
 .pong-bar .prompt { color: var(--accent); }
 #pong-canvas, #snake-canvas {
-  width: min(720px, 92vw); aspect-ratio: 3 / 2;
+  width: min(720px, 92vw, calc((100dvh - 130px) * 1.5)); aspect-ratio: 3 / 2;
   border: 1px solid var(--border); background: #0A0A0A; touch-action: none;
 }
 .pong-close {
