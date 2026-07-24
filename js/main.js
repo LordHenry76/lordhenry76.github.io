@@ -472,4 +472,18 @@
   else img.addEventListener('load', render);
   var rt;
   window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(render, 200); });
+
+  // Touch / no-hover: rivela quando entra nello schermo + tap per alternare
+  var noHover = window.matchMedia && window.matchMedia('(hover: none)').matches;
+  if (noHover) {
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) wrap.classList.add('revealed'); });
+      }, { threshold: 0.6 });
+      io.observe(wrap);
+    } else {
+      wrap.classList.add('revealed');
+    }
+    wrap.addEventListener('click', function () { wrap.classList.toggle('revealed'); });
+  }
 })();
