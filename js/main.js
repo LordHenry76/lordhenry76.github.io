@@ -440,3 +440,36 @@
   resize();
   requestAnimationFrame(frame);
 })();
+
+// Ritratto sezione chi — pixellato di default, si rivela originale al mouse over
+(function () {
+  var wrap = document.querySelector('.ritratto-wrap');
+  if (!wrap) return;
+  var img = wrap.querySelector('.ritratto');
+  var cv = wrap.querySelector('.ritratto-px');
+  if (!img || !cv) return;
+  var ctx = cv.getContext('2d');
+
+  function render() {
+    var w = img.clientWidth, h = img.clientHeight;
+    if (!w || !h || !img.naturalWidth) return;
+    cv.width = w; cv.height = h;
+    var block = Math.max(6, Math.round(w / 28)); // dimensione "pixel"
+    var sw = Math.max(1, Math.round(w / block));
+    var sh = Math.max(1, Math.round(h / block));
+    // ridimensiona in piccolo mantenendo il cover
+    var ar = img.naturalWidth / img.naturalHeight, tar = w / h, sx, sy, sWi, sHe;
+    if (ar > tar) { sHe = img.naturalHeight; sWi = sHe * tar; sx = (img.naturalWidth - sWi) / 2; sy = 0; }
+    else { sWi = img.naturalWidth; sHe = sWi / tar; sx = 0; sy = (img.naturalHeight - sHe) / 2; }
+    ctx.imageSmoothingEnabled = true;
+    ctx.clearRect(0, 0, w, h);
+    ctx.drawImage(img, sx, sy, sWi, sHe, 0, 0, sw, sh);
+    // riscala in grande senza smoothing → effetto pixel
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(cv, 0, 0, sw, sh, 0, 0, w, h);
+  }
+  if (img.complete && img.naturalWidth) render();
+  else img.addEventListener('load', render);
+  var rt;
+  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(render, 200); });
+})();
