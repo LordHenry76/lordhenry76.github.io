@@ -336,54 +336,102 @@
     return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
   }
   var ac = rgb(accent);
+  var lanes = [], bursts = [];
 
   function resize() {
     w = canvas.clientWidth; h = canvas.clientHeight;
     canvas.width = w * dpr; canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    var count = Math.round(Math.min(70, Math.max(28, w / 22)));
-    parts = [];
-    for (var i = 0; i < count; i++) parts.push(spawn(true));
+    var laneCount = Math.round(Math.min(14, Math.max(6, h / 26)));
+    lanes = [];
+    for (var i = 0; i < laneCount; i++) {
+      var y = (i + 0.5) / laneCount * h + (Math.random() - 0.5) * 8;
+      lanes.push({ y: y, r: spawn(1, y, true), l: spawn(-1, y, true) });
+    }
+    bursts = [];
   }
-  function spawn(anywhere) {
-    var speed = 0.25 + Math.random() * 1.4;
-    var white = Math.random() > 0.55;
+  function spawn(dir, y, anywhere) {
+    var speed = 0.4 + Math.random() * 1.5;
     return {
-      x: anywhere ? Math.random() * w : -20 - Math.random() * 120,
-      y: Math.random() * h,
+      dir: dir,
+      x: anywhere ? Math.random() * w : (dir > 0 ? -20 - Math.random() * 140 : w + 20 + Math.random() * 140),
+      y: y,
       vx: speed,
-      len: 8 + Math.random() * 48,
-      r: 0.5 + Math.random() * 1.4,
-      a: 0.15 + Math.random() * 0.5,
-      white: white,
+      len: 10 + Math.random() * 46,
+      r: 0.5 + Math.random() * 1.3,
+      a: 0.14 + Math.random() * 0.45,
+      white: Math.random() > 0.5,
       tw: Math.random() * Math.PI * 2
     };
+  }
+  function drawParticle(p) {
+    p.tw += 0.045;
+    var flick = 0.6 + 0.4 * Math.sin(p.tw);
+    var col = p.white ? [255, 255, 255] : ac;
+    var alpha = p.a * flick;
+    var tail = p.x - p.dir * p.len;
+    var grad = ctx.createLinearGradient(tail, p.y, p.x, p.y);
+    grad.addColorStop(0, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
+    grad.addColorStop(1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + alpha + ')');
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = p.r;
+    ctx.beginPath();
+    ctx.moveTo(tail, p.y);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + alpha + ')';
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  function addBurst(x, y) {
+    bursts.push({ x: x, y: y, life: 0, max: 26 + Math.random() * 10, size: 16 + Math.random() * 14 });
+  }
+  function drawBursts() {
+    for (var i = bursts.length - 1; i >= 0; i--) {
+      var b = bursts[i];
+      b.life++;
+      var t = b.life / b.max;
+      if (t >= 1) { bursts.splice(i, 1); continue; }
+      var ease = 1 - Math.pow(1 - t, 2);
+      var rad = b.size * (0.3 + ease * 1.6);
+      var a = (1 - t) * 0.9;
+      // core glow
+      var g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, rad);
+      g.addColorStop(0, 'rgba(255,255,255,' + a + ')');
+      g.addColorStop(0.35, 'rgba(' + ac[0] + ',' + ac[1] + ',' + ac[2] + ',' + (a * 0.7) + ')');
+      g.addColorStop(1, 'rgba(' + ac[0] + ',' + ac[1] + ',' + ac[2] + ',0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, rad, 0, Math.PI * 2);
+      ctx.fill();
+      // expanding ring
+      ctx.strokeStyle = 'rgba(255,255,255,' + (a * 0.6) + ')';
+      ctx.lineWidth = 1.2 * (1 - t);
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, rad * 1.05, 0, Math.PI * 2);
+      ctx.stroke();
+    }
   }
   function frame() {
     ctx.clearRect(0, 0, w, h);
     ctx.globalCompositeOperation = 'lighter';
-    for (var i = 0; i < parts.length; i++) {
-      var p = parts[i];
-      p.x += p.vx;
-      p.tw += 0.04;
-      var flick = 0.6 + 0.4 * Math.sin(p.tw);
-      var col = p.white ? [255, 255, 255] : ac;
-      var alpha = p.a * flick;
-      var grad = ctx.createLinearGradient(p.x - p.len, p.y, p.x, p.y);
-      grad.addColorStop(0, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
-      grad.addColorStop(1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + alpha + ')');
-      ctx.strokeStyle = grad;
-      ctx.lineWidth = p.r;
-      ctx.beginPath();
-      ctx.moveTo(p.x - p.len, p.y);
-      ctx.lineTo(p.x, p.y);
-      ctx.stroke();
-      ctx.fillStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + alpha + ')';
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-      if (p.x - p.len > w + 40) parts[i] = spawn(false);
+    for (var i = 0; i < lanes.length; i++) {
+      var ln = lanes[i], r = ln.r, l = ln.l;
+      r.x += r.vx; l.x -= l.vx;
+      drawParticle(r);
+      drawParticle(l);
+      // collision: rightward head meets leftward head
+      if (r.x >= l.x && (r.x - r.vx) < (l.x + l.vx) + 1) {
+        addBurst((r.x + l.x) / 2, ln.y);
+        ln.r = spawn(1, ln.y, false);
+        ln.l = spawn(-1, ln.y, false);
+      } else {
+        if (r.x - r.len > w + 40) ln.r = spawn(1, ln.y, false);
+        if (l.x + l.len < -40) ln.l = spawn(-1, ln.y, false);
+      }
     }
+    drawBursts();
     ctx.globalCompositeOperation = 'source-over';
     requestAnimationFrame(frame);
   }
