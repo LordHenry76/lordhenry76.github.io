@@ -230,6 +230,13 @@ h2 {
 .contatti-links a:last-child { border-bottom: 1px solid var(--border); }
 .contatti-links a:hover { color: var(--accent); }
 .contatti-links .arrow { color: var(--accent); }
+.social-links { display: flex; gap: 20px; align-items: center; }
+.social-links a {
+  color: var(--fg); display: inline-flex; padding: 10px;
+  border: 1px solid var(--border); border-radius: 50%;
+  transition: color .2s, border-color .2s, transform .2s;
+}
+.social-links a:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
 
 /* Form contatti */
 .contact-form { display: flex; flex-direction: column; gap: 20px; max-width: 640px; margin-bottom: 64px; }
