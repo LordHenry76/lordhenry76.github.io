@@ -337,12 +337,30 @@
   }
   var ac = rgb(accent);
   var lanes = [], bursts = [];
+  var header = document.getElementById('top');
+  var logo = header && header.querySelector('.hero-logo');
+  var TOP = 150, GAP = 40;
+
+  function position() {
+    if (!logo) return true;
+    var hr = header.getBoundingClientRect();
+    var lr = logo.getBoundingClientRect();
+    var top = TOP;
+    var bottom = (lr.top - hr.top) - GAP;      // finisce sopra il logo
+    var height = bottom - top;
+    if (height < 60) { canvas.style.display = 'none'; return false; }
+    canvas.style.display = 'block';
+    canvas.style.top = top + 'px';
+    canvas.style.height = height + 'px';
+    return true;
+  }
 
   function resize() {
+    if (!position()) { w = h = 0; lanes = []; bursts = []; return; }
     w = canvas.clientWidth; h = canvas.clientHeight;
     canvas.width = w * dpr; canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    var laneCount = Math.round(Math.min(14, Math.max(6, h / 26)));
+    var laneCount = Math.round(Math.min(14, Math.max(4, h / 26)));
     lanes = [];
     for (var i = 0; i < laneCount; i++) {
       var y = (i + 0.5) / laneCount * h + (Math.random() - 0.5) * 8;
