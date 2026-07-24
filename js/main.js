@@ -318,3 +318,77 @@
     banner.hidden = false;
   });
 })();
+
+// Hero light particles — streaks drifting across the screen
+(function () {
+  var canvas = document.getElementById('hero-particles');
+  if (!canvas) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var ctx = canvas.getContext('2d');
+  var accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#D94E15';
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var w = 0, h = 0, parts = [];
+
+  function rgb(hex) {
+    var m = hex.replace('#', '');
+    if (m.length === 3) m = m[0]+m[0]+m[1]+m[1]+m[2]+m[2];
+    var n = parseInt(m, 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+  var ac = rgb(accent);
+
+  function resize() {
+    w = canvas.clientWidth; h = canvas.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var count = Math.round(Math.min(70, Math.max(28, w / 22)));
+    parts = [];
+    for (var i = 0; i < count; i++) parts.push(spawn(true));
+  }
+  function spawn(anywhere) {
+    var speed = 0.25 + Math.random() * 1.4;
+    var white = Math.random() > 0.55;
+    return {
+      x: anywhere ? Math.random() * w : -20 - Math.random() * 120,
+      y: Math.random() * h,
+      vx: speed,
+      len: 8 + Math.random() * 48,
+      r: 0.5 + Math.random() * 1.4,
+      a: 0.15 + Math.random() * 0.5,
+      white: white,
+      tw: Math.random() * Math.PI * 2
+    };
+  }
+  function frame() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+    for (var i = 0; i < parts.length; i++) {
+      var p = parts[i];
+      p.x += p.vx;
+      p.tw += 0.04;
+      var flick = 0.6 + 0.4 * Math.sin(p.tw);
+      var col = p.white ? [255, 255, 255] : ac;
+      var alpha = p.a * flick;
+      var grad = ctx.createLinearGradient(p.x - p.len, p.y, p.x, p.y);
+      grad.addColorStop(0, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
+      grad.addColorStop(1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + alpha + ')');
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = p.r;
+      ctx.beginPath();
+      ctx.moveTo(p.x - p.len, p.y);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + alpha + ')';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+      if (p.x - p.len > w + 40) parts[i] = spawn(false);
+    }
+    ctx.globalCompositeOperation = 'source-over';
+    requestAnimationFrame(frame);
+  }
+  var rt;
+  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(resize, 150); });
+  resize();
+  requestAnimationFrame(frame);
+})();
