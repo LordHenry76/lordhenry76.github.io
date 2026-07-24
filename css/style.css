@@ -86,6 +86,14 @@ header {
   -webkit-mask-image: linear-gradient(to bottom, black 0%, black 35%, transparent 80%);
   mask-image: linear-gradient(to bottom, black 0%, black 35%, transparent 80%);
 }
+.hero-particles {
+  position: absolute; left: 0; right: 0;
+  top: 150px; bottom: 300px;
+  width: 100%; height: auto; z-index: 0;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+}
 .hero-meta {
   font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--sub);
   position: absolute; top: 96px; left: var(--pad);
