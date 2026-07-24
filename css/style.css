@@ -208,7 +208,7 @@ h2 {
   image-rendering: pixelated;
   opacity: 1; transition: opacity .45s ease;
 }
-.ritratto-wrap:hover .ritratto-px, .ritratto-wrap:focus-within .ritratto-px { opacity: 0; }
+.ritratto-wrap:hover .ritratto-px, .ritratto-wrap:focus-within .ritratto-px, .ritratto-wrap.revealed .ritratto-px { opacity: 0; }
 .chi-col { display: flex; flex-direction: column; gap: 24px; }
 .chi-caption { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--sub); }
 .chi-testo { display: flex; flex-direction: column; gap: 28px; }
