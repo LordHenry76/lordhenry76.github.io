@@ -169,7 +169,7 @@ h2 {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
   gap: clamp(24px, 4vw, 48px); align-items: start;
 }
-.progetto-info { display: flex; flex-direction: column; gap: 18px; position: sticky; top: 96px; }
+.progetto-info { display: flex; flex-direction: column; gap: 18px; }
 .progetto-meta {
   display: flex; gap: 16px; align-items: baseline;
   font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--sub);
@@ -361,7 +361,6 @@ footer {
 .pong-close:hover { color: var(--accent); border-color: var(--accent); }
 
 @media (max-width: 700px) {
-  .progetto-info { position: static; }
   .footer-brand span, .footer-meta { font-size: 11px; }
   .footer-meta { gap: 12px; width: 100%; }
   .footer-meta .top-link { padding: 6px 10px; }
