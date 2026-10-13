@@ -425,3 +425,6 @@ footer {
 }
 .form-consent a { color: var(--accent); text-decoration: none; }
 .form-consent a:hover { text-decoration: underline; }
+
+.progetto-link { color: var(--accent); text-decoration: none; font-size: 14px; letter-spacing: .04em; align-self: flex-start; }
+.progetto-link:hover { text-decoration: underline; }
