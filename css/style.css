@@ -129,11 +129,12 @@ header {
   padding: 14px 0;
 }
 .marquee-track {
-  display: flex; gap: 48px; width: max-content;
-  animation: marquee 28s linear infinite;
+  display: flex; width: max-content;
+  animation: marquee 60s linear infinite;
   font-family: 'JetBrains Mono', monospace; font-size: 14px;
   color: var(--sub); white-space: nowrap;
 }
+.marquee-track > span { margin-right: 48px; }
 .marquee-track .sep { color: var(--accent); }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
@@ -169,7 +170,7 @@ h2 {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
   gap: clamp(24px, 4vw, 48px); align-items: start;
 }
-.progetto-info { display: flex; flex-direction: column; gap: 18px; }
+.progetto-info { display: flex; flex-direction: column; gap: 18px; position: sticky; top: 96px; }
 .progetto-meta {
   display: flex; gap: 16px; align-items: baseline;
   font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--sub);
@@ -361,6 +362,7 @@ footer {
 .pong-close:hover { color: var(--accent); border-color: var(--accent); }
 
 @media (max-width: 700px) {
+  .progetto-info { position: static; }
   .footer-brand span, .footer-meta { font-size: 11px; }
   .footer-meta { gap: 12px; width: 100%; }
   .footer-meta .top-link { padding: 6px 10px; }
@@ -425,6 +427,3 @@ footer {
 }
 .form-consent a { color: var(--accent); text-decoration: none; }
 .form-consent a:hover { text-decoration: underline; }
-
-.progetto-link { color: var(--accent); text-decoration: none; font-size: 14px; letter-spacing: .04em; align-self: flex-start; }
-.progetto-link:hover { text-decoration: underline; }
