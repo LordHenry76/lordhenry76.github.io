@@ -436,3 +436,8 @@ footer {
   .marquee-track, .cursor { animation: none; }
   .js .reveal, .js .reveal.in { opacity: 1; transform: none; transition: none; }
 }
+
+/* Aree di tocco più ampie per i link piccoli: padding + margine negativo, l'aspetto non cambia */
+nav .menu a, .footer-meta a:not(.top-link), .cookie-prefs, .progetto-link { padding: 14px 6px; margin: -14px -6px; }
+nav .logo { padding: 13px 0; margin: -13px 0; }
+.pong-link { padding: 3px 0; margin: -3px 0; }

@@ -117,6 +117,9 @@
   var ctx = canvas.getContext('2d');
   var W = 720, H = 480, PH = 72, PW = 10, R = 6;
   var g, raf, keys = {};
+  // su touch: "tocca" al posto di "spazio" e testi più grandi (il canvas viene rimpicciolito)
+  var touch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  var KEY = touch ? 'tocca' : 'spazio', MSG = touch ? 24 : 13;
 
   function serve() {
     if (g.over) { g.ps = 0; g.as = 0; g.over = false; }
@@ -137,8 +140,8 @@
       if (g.vx < 0 && g.bx - R < 24 + PW && g.bx - R > 14 && Math.abs(g.by - g.py) < PH / 2 + R) { g.vx = Math.min(11, -g.vx * 1.06); g.vy += (g.by - g.py) * 0.12; }
       if (g.vx > 0 && g.bx + R > W - 24 - PW && g.bx + R < W - 14 && Math.abs(g.by - g.ay) < PH / 2 + R) { g.vx = Math.max(-11, -g.vx * 1.06); g.vy += (g.by - g.ay) * 0.12; }
       g.ay = clampY(g.ay + Math.max(-4.4, Math.min(4.4, (g.by - g.ay) * 0.085)));
-      if (g.bx < -R) { g.as++; g.running = false; g.over = g.as >= 5; g.msg = g.over ? 'game over — spazio per rigiocare' : 'punto al lab — spazio per servire'; }
-      if (g.bx > W + R) { g.ps++; g.running = false; g.over = g.ps >= 5; g.msg = g.over ? 'hai vinto! — spazio per rigiocare' : 'punto per te — spazio per servire'; }
+      if (g.bx < -R) { g.as++; g.running = false; g.over = g.as >= 5; g.msg = g.over ? 'game over — ' + KEY + ' per rigiocare' : 'punto al lab — ' + KEY + ' per servire'; }
+      if (g.bx > W + R) { g.ps++; g.running = false; g.over = g.ps >= 5; g.msg = g.over ? 'hai vinto! — ' + KEY + ' per rigiocare' : 'punto per te — ' + KEY + ' per servire'; }
     }
     ctx.fillStyle = '#0A0A0A'; ctx.fillRect(0, 0, W, H);
     ctx.strokeStyle = 'rgba(250,250,247,0.25)'; ctx.setLineDash([8, 10]); ctx.lineWidth = 2;
@@ -149,7 +152,7 @@
     ctx.font = '700 46px "JetBrains Mono", monospace'; ctx.textAlign = 'center';
     ctx.fillStyle = 'rgba(250,250,247,0.5)';
     ctx.fillText(g.ps, W / 2 - 60, 62); ctx.fillText(g.as, W / 2 + 60, 62);
-    if (g.msg) { ctx.font = '13px "JetBrains Mono", monospace'; ctx.fillStyle = '#D94E15'; ctx.fillText(g.msg, W / 2, H - 40); }
+    if (g.msg) { ctx.font = MSG + 'px "JetBrains Mono", monospace'; ctx.fillStyle = '#D94E15'; ctx.fillText(g.msg, W / 2, H - 40); }
     if (g.running || g.msg === '') { ctx.fillStyle = '#D94E15'; ctx.fillRect(g.bx - R, g.by - R, R * 2, R * 2); }
     raf = requestAnimationFrame(loop);
   }
@@ -168,7 +171,7 @@
   function onTap() { if (!g.running) serve(); }
 
   function open() {
-    g = { py: H / 2, ay: H / 2, bx: W / 2, by: H / 2, vx: 0, vy: 0, ps: 0, as: 0, running: false, over: false, msg: 'premi spazio per servire' };
+    g = { py: H / 2, ay: H / 2, bx: W / 2, by: H / 2, vx: 0, vy: 0, ps: 0, as: 0, running: false, over: false, msg: (touch ? 'tocca' : 'premi spazio') + ' per servire' };
     keys = {};
     overlay.hidden = false;
     window.addEventListener('keydown', onKeyDown);
@@ -201,6 +204,8 @@
   var ctx = canvas.getContext('2d');
   var W = 720, H = 480, C = 24, COLS = 30, ROWS = 20;
   var g, timer, touch = null;
+  var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  var KEY = coarse ? 'tocca' : 'spazio', MSG = coarse ? 24 : 13;
 
   function placeFood() {
     var f;
@@ -224,7 +229,7 @@
     var head = { x: g.snake[0].x + g.dir.x, y: g.snake[0].y + g.dir.y };
     if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS || g.snake.some(function (s) { return s.x === head.x && s.y === head.y; })) {
       g.running = false; g.over = true;
-      g.msg = 'game over — ' + g.score + ' punti — spazio per rigiocare';
+      g.msg = 'game over — ' + g.score + ' punti — ' + KEY + ' per rigiocare';
       if (g.score > g.best) { g.best = g.score; try { localStorage.setItem('wildlab-snake-best', String(g.best)); } catch (e) {} }
       clearInterval(timer); draw(); return;
     }
@@ -246,10 +251,10 @@
       ctx.fillStyle = i === 0 ? '#FAFAF7' : 'rgba(250,250,247,0.75)';
       ctx.fillRect(s.x * C + 2, s.y * C + 2, C - 4, C - 4);
     });
-    ctx.font = '13px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
+    ctx.font = MSG + 'px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
     ctx.fillStyle = 'rgba(250,250,247,0.5)';
-    ctx.fillText('score ' + g.score + '   best ' + g.best, 12, 22);
-    if (g.msg) { ctx.font = '13px "JetBrains Mono", monospace'; ctx.textAlign = 'center'; ctx.fillStyle = '#D94E15'; ctx.fillText(g.msg, W / 2, H / 2 + 60); }
+    ctx.fillText('score ' + g.score + '   best ' + g.best, 12, 10 + MSG);
+    if (g.msg) { ctx.font = MSG + 'px "JetBrains Mono", monospace'; ctx.textAlign = 'center'; ctx.fillStyle = '#D94E15'; ctx.fillText(g.msg, W / 2, H / 2 + 60); }
   }
   function turn(d) {
     if (d.x === -g.dir.x && d.y === -g.dir.y) return;
@@ -273,7 +278,7 @@
   function onUp() { touch = null; }
 
   function open() {
-    g = { snake: [{x:14,y:10},{x:13,y:10},{x:12,y:10}], dir: {x:1,y:0}, next: {x:1,y:0}, food: null, score: 0, best: 0, running: false, over: false, msg: 'premi spazio per iniziare' };
+    g = { snake: [{x:14,y:10},{x:13,y:10},{x:12,y:10}], dir: {x:1,y:0}, next: {x:1,y:0}, food: null, score: 0, best: 0, running: false, over: false, msg: (coarse ? 'tocca' : 'premi spazio') + ' per iniziare' };
     try { g.best = parseInt(localStorage.getItem('wildlab-snake-best') || '0', 10) || 0; } catch (e) {}
     overlay.hidden = false;
     window.addEventListener('keydown', onKeyDown);
