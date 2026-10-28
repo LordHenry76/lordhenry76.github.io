@@ -3,6 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+  // .js = contenuti animati via script; .booted = preloader già visto in questa sessione
+  (function (d) {
+    d.classList.add('js');
+    var skip = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    try { if (sessionStorage.getItem('wl-booted')) skip = true; } catch (e) {}
+    if (skip) d.classList.add('booted');
+  })(document.documentElement);
+</script>
 <meta name="google-site-verification" content="6n95qmiWdIdMx7_6i-3iX0XWfZ9rsQnwUMPsYDpBGYw" />
 <!-- Google Analytics - caricato solo dopo consenso (vedi js/main.js) -->
 <script>
@@ -21,6 +30,16 @@
 </script>
 <title>[wild]lab - design · dev · automation · ai</title>
 <meta name="description" content="Il laboratorio di Marco “Wild”: coding, web app, home automation e intelligenza artificiale. Niente fronzoli.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lordhenry76.github.io/">
+<meta property="og:title" content="[wild]lab - design · dev · automation · ai">
+<meta property="og:description" content="Il laboratorio di Marco “Wild”: coding, web app, home automation e intelligenza artificiale. Niente fronzoli.">
+<meta property="og:image" content="https://lordhenry76.github.io/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="[wild]lab - Scrivo codice, disegno interfacce e insegno alla casa a fare da sola.">
+<meta property="og:locale" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="assets/favicon-180.png">
@@ -112,7 +131,7 @@
         <p>Convertitore ed editor di file per Windows: trascini un file, tieni premuto Shift, Alt o Ctrl e una ruota di scelte si apre attorno al puntatore per convertire, comprimere, modificare o condividere. Tutto gira in locale.</p>
         <div class="progetto-tags"><span>c#</span><span>wpf</span><span>ffmpeg</span></div>
       </div>
-      <div class="mockup-ipad"><img src="assets/lemonize.png" alt="Lemonize: finestra principale, ruota di conversione ed editor"></div>
+      <div class="mockup-ipad"><img src="assets/lemonize.webp" width="2552" height="1920" loading="lazy" decoding="async" alt="Lemonize: finestra principale, ruota di conversione ed editor"></div>
     </article>
 
     <article class="progetto reveal">
@@ -123,7 +142,7 @@
         <div class="progetto-tags"><span>home assistant</span><span>python</span><span>hacs</span></div>
         <a class="progetto-link" href="https://github.com/LordHenry76/ha-amazon-orders" target="_blank" rel="noopener">github →</a>
       </div>
-      <div class="mockup-ipad"><img src="assets/ha-amazon-orders.png" alt="Card ha-amazon-orders in Home Assistant su iPad"></div>
+      <div class="mockup-ipad"><img src="assets/ha-amazon-orders.webp" width="1276" height="960" loading="lazy" decoding="async" alt="Card ha-amazon-orders in Home Assistant su iPad"></div>
     </article>
 
     <article class="progetto reveal">
@@ -134,7 +153,7 @@
         <div class="progetto-tags"><span>home assistant</span><span>python</span><span>hacs</span></div>
         <a class="progetto-link" href="https://github.com/LordHenry76/ha-deliveroo" target="_blank" rel="noopener">github →</a>
       </div>
-      <div class="mockup-ipad"><img src="assets/ha-deliveroo.png" alt="Card ha-deliveroo in Home Assistant su iPad"></div>
+      <div class="mockup-ipad"><img src="assets/ha-deliveroo.webp" width="1276" height="960" loading="lazy" decoding="async" alt="Card ha-deliveroo in Home Assistant su iPad"></div>
     </article>
 
     <article class="progetto reveal">
@@ -144,7 +163,7 @@
         <p>Software gestionale per la ricezione lavorazioni di una moderna calzoleria con stampa ricevute e cartellini di lavorazione.</p>
         <div class="progetto-tags"><span>web app</span><span>html</span><span>python</span></div>
       </div>
-      <div class="mockup-ipad"><img src="assets/lobalu.png" alt="Gestionale lobalù su iPad"></div>
+      <div class="mockup-ipad"><img src="assets/lobalu.webp" width="1951" height="1468" loading="lazy" decoding="async" alt="Gestionale lobalù su iPad"></div>
     </article>
 
     <article class="progetto reveal">
@@ -155,7 +174,7 @@
         <div class="progetto-tags"><span>html</span><span>css</span><span>javascript</span></div>
         <a class="progetto-link" href="https://avvocatofirmani.it" target="_blank" rel="noopener">visita il sito →</a>
       </div>
-      <div class="mockup-ipad"><img src="assets/avvocatofirmani.png" alt="avvocatofirmani.it su iPad"></div>
+      <div class="mockup-ipad"><img src="assets/avvocatofirmani.webp" width="1518" height="1142" loading="lazy" decoding="async" alt="avvocatofirmani.it su iPad"></div>
     </article>
 
     <article class="progetto reveal">
@@ -165,7 +184,7 @@
         <p>Punto cassa web per un locale di specialità abruzzesi: categorie, comande e stampe di reparto in un'unica interfaccia touch.</p>
         <div class="progetto-tags"><span>web app</span><span>pos</span><span>touch ui</span></div>
       </div>
-      <div class="mockup-ipad"><img src="assets/blacksheep-pos.png" alt="Blacksheep POS su iPad"></div>
+      <div class="mockup-ipad"><img src="assets/blacksheep-pos.webp" width="1518" height="1142" loading="lazy" decoding="async" alt="Blacksheep POS su iPad"></div>
     </article>
 
     <article class="progetto reveal">
@@ -175,7 +194,7 @@
         <p>Integrazione WhatsApp ↔ Chatwoot - Bridge Python self-hosted tra un gateway WhatsApp (OpenWA, patchato a livello sorgente TypeScript) e Chatwoot, per centralizzare le chat clienti di uno studio legale.</p>
         <div class="progetto-tags"><span>python</span><span>rest api</span><span>docker</span></div>
       </div>
-      <div class="mockup-ipad"><img src="assets/whatsapp-gateway.png" alt="Chatwoot con canale WhatsApp su iPad"></div>
+      <div class="mockup-ipad"><img src="assets/whatsapp-gateway.webp" width="1736" height="1306" loading="lazy" decoding="async" alt="Chatwoot con canale WhatsApp su iPad"></div>
     </article>
 
     <article class="progetto reveal">
@@ -185,7 +204,7 @@
         <p>Assistente legale basato su LLM e Google Gemini Notebook: chatbot che interroga archivi nazionali e risponde citando le fonti.</p>
         <div class="progetto-tags"><span>llm</span><span>notebooklm</span><span>python</span></div>
       </div>
-      <div class="mockup-browser"><div class="shot"><img src="assets/lexa.png" alt="Editor con la pipeline RAG di lexa"></div></div>
+      <div class="mockup-browser"><div class="shot"><img src="assets/lexa.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Editor con la pipeline RAG di lexa"></div></div>
     </article>
 
     <article class="progetto reveal">
@@ -195,7 +214,7 @@
         <p>Configurazione Home Assistant completa: 40+ automazioni, dashboard custom e zero dipendenze cloud.</p>
         <div class="progetto-tags"><span>home assistant</span><span>yaml</span><span>esphome</span></div>
       </div>
-      <div class="mockup-ipad"><img src="assets/home-assistant.png" alt="Dashboard Home Assistant su iPad"></div>
+      <div class="mockup-ipad"><img src="assets/home-assistant.webp" width="1518" height="1142" loading="lazy" decoding="async" alt="Dashboard Home Assistant su iPad"></div>
     </article>
 
   </div>
@@ -206,7 +225,7 @@
     <div class="chi-col reveal">
       <div class="kicker">[03] - chi</div>
       <div class="ritratto-wrap">
-        <img class="ritratto" src="assets/marco-ritratto-fade.png" alt="Ritratto di Marco">
+        <img class="ritratto" src="assets/marco-ritratto-fade.webp" width="1024" height="1536" loading="lazy" decoding="async" alt="Ritratto di Marco">
         <canvas class="ritratto-px" aria-hidden="true"></canvas>
       </div>
       <div class="chi-caption">marco "wild" · design &amp; dev</div>

@@ -14,7 +14,16 @@
   var cursorLine = boot.querySelector('.cursor-line');
   var i = 0;
 
-  var timer = setInterval(function () {
+  // Boot completo solo alla prima visita della sessione
+  if (document.documentElement.classList.contains('booted')) {
+    pre.classList.add('gone');
+    initReveal();
+  } else {
+    try { sessionStorage.setItem('wl-booted', '1'); } catch (e) {}
+    var timer = setInterval(bootLine, 150);
+  }
+
+  function bootLine() {
     var l = lines[i];
     var div = document.createElement('div');
     div.className = 'line';
@@ -25,10 +34,10 @@
     i++;
     if (i >= lines.length) {
       clearInterval(timer);
-      setTimeout(function () { pre.classList.add('hide'); }, 500);
-      setTimeout(function () { pre.classList.add('gone'); initReveal(); }, 1300);
+      setTimeout(function () { pre.classList.add('hide'); }, 250);
+      setTimeout(function () { pre.classList.add('gone'); initReveal(); }, 950);
     }
-  }, 280);
+  }
 
   function initReveal() {
     var els = document.querySelectorAll('.reveal');
