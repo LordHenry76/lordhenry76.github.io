@@ -434,3 +434,9 @@ footer {
 nav .menu a, .footer-meta a:not(.top-link), .cookie-prefs, .progetto-link { padding: 14px 6px; margin: -14px -6px; }
 nav .logo { padding: 13px 0; margin: -13px 0; }
 .pong-link { padding: 3px 0; margin: -3px 0; }
+
+/* Email diretta sotto il form */
+.contact-mail { margin: -32px 0 40px; font-size: 13px; color: var(--sub); }
+.contact-mail .prompt { color: var(--accent); }
+.contact-mail a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--border); text-underline-offset: 4px; padding: 12px 0; }
+.contact-mail a:hover { color: var(--accent); text-decoration-color: var(--accent); }
