@@ -130,7 +130,7 @@ header {
 }
 .marquee-track {
   display: flex; width: max-content;
-  animation: marquee 60s linear infinite;
+  animation: marquee 80s linear infinite;
   font-family: 'JetBrains Mono', monospace; font-size: 14px;
   color: var(--sub); white-space: nowrap;
 }
